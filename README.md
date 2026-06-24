@@ -58,7 +58,7 @@
 
 ## ⚠️ Risk Disclaimer
 
-Trading Forex and Gold carries a high level of risk. The Martingale strategy can result in the total loss of your deposit if not managed with strict risk settings. **Never trade with money you cannot afford to lose.**
+This bot is built for **educational and analytical purposes only**. Trading Forex and Gold carries a high level of risk. The Martingale strategy can result in the total loss of your deposit if not managed with strict risk settings. **Never trade with money you cannot afford to lose.**
 
 ---
 
