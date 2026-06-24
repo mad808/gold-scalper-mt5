@@ -1,50 +1,71 @@
-# 🏆 Gold Aggressive Scalper v18.00 - MT5
+# 🤖 Turkmen Gold Sniper Scalper v16.30 (MQL5)
 
-`Gold Aggressive Scalper v18.00` is an advanced, high-frequency algorithmic trading robot written in MQL5 for MetaTrader 5. It is specifically optimized to aggressively trade **XAUUSD (Gold)** on the M5 timeframe. 
+![XAUUSD](https://img.shields.io/badge/Asset-XAUUSD%20(Gold)-gold?style=for-the-badge)
+![Platform](https://img.shields.io/badge/Platform-MetaTrader%205-blue?style=for-the-badge)
+![Strategy](https://img.shields.io/badge/Strategy-Martingale%20Grid-red?style=for-the-badge)
 
-The bot uses dynamic trend tracking, volume filters, and a specialized candlestick exhaustion filter nicknamed the **"Plastic Glove"** to scalp fast momentum reversals safely.
-
----
-
-## 💡 How the Strategy Works
-
-Instead of blindly taking reversals, the EA checks three layers of filter validation before executing any trade:
-
-1. **Macro Trend Guard:** Built around the 200 Exponential Moving Average (EMA) on the H1 timeframe. The bot only opens BUY positions during structural bull markets and SELL positions during structural bear markets.
-2. **Local Pullback Tracker:** Tracks the convergence of EMA 13 and EMA 34 on the M5 execution chart, combined with RSI oversold/overbought boundaries.
-3. **The "Plastic Glove" (Wick Exhaustion Filter):** When a trend signal is triggered, the bot analyzes the wick structure of the last completed candle. To prevent catching a "falling knife", a BUY trade is only opened if the lower wick forms at least **50%** of the candle's total height, indicating that seller momentum has officially failed.
+**Turkmen Gold Sniper Scalper** is a high-frequency trading (HFT) Expert Advisor (EA) designed specifically for the Gold (XAUUSD) market. It combines **Dynamic RSI/ADX filters** with a sophisticated **Martingale Grid** system, optimized for small accounts (starting from $20).
 
 ---
 
-## ⚙️ Core Parameters
+## 🚀 Key Features
 
-| Variable Group | Parameter | Default | Description |
+*   **⚡ 3-Stage Multi-TP:** Instead of one target, the bot splits the initial entry into 3 positions with different profit targets to maximize gain in volatile moves.
+*   **🧠 Dynamic RSI Logic:** Automatically adjusts entry sensitivity based on market volatility (ADX). It's aggressive in ranging markets and conservative during trends.
+*   **📏 ATR-Based Grid:** No fixed distances. The bot measures market "breath" using ATR and widens the grid steps during high volatility to prevent "blown accounts."
+*   **🛡️ Smart Protection:** 
+    *   **Equity Guard:** Hard stop-loss based on percentage of balance.
+    *   **Margin Check:** Prevents opening new levels if the account margin is too low.
+    *   **News Filter & Session Control:** Option to stop trading during high-impact news or outside of London/New York sessions.
+*   **📈 Smart Trailing:** A trailing take-profit that locks in gains if the price suddenly spikes in your favor.
+
+---
+
+## 🛠 Trading Strategy
+
+1.  **Market Analysis:** The bot uses a 3-layer filter (EMA 13/34 on M5 and EMA 200 on H1) to determine the trend direction.
+2.  **Entry:** Enters a trade when RSI reaches oversold/overbought levels *only if* the trend matches.
+3.  **Grid Management:** If the price moves against the trade, it opens calculated levels using a **1.6x Multiplier** (customizable) to average the price.
+4.  **Exit:** Closes the entire basket when the weighted average profit reaches the target (default: 40 points).
+
+---
+
+## ⚙️ Input Parameters
+
+| Category | Parameter | Default Value | Description |
 | :--- | :--- | :--- | :--- |
-| **BOT BRANDING** | `Input_BotTitle` | `🏆 Gold Aggressive Scalper v18.00` | Custom dashboard title displayed on the chart. |
-| **HFT & GRID** | `Input_InitialLot` | `0.03` | Entry position size (highly aggressive for micro accounts). |
-| | `Input_MaxGridLevels` | `3` | Maximum allowed positions per direction (1 entry + 2 recovery steps). |
-| | `Input_GridStepPoints` | `350` | Spacing distance (points) before opening a recovery layer. |
-| **TARGETS** | `Input_BasketTP_USD` | `$2.00` | Basket exit target in USD to secure profits fast. |
-| | `Input_DailyProfitLimit_USD`| `$40.00` | Hard cap on daily profit; pauses EA when reached. |
-| | `Input_HardStopLossPoints`| `1100` | Broker-side physical SL safety margin (points). |
-| **PLASTIC GLOVE**| `Input_MinWickRatio` | `0.50` | Minimum wick-to-candle ratio (50% shadow required). |
-| **SAFETY** | `Input_MaxDrawdownPercent`| `70.0%` | Hard equity limit to protect against catastrophic market events. |
+| **Volume** | `AutoLot` | `True` | Scales lot size based on balance. |
+| | `AutoLotStep` | `$60.0` | Adds 0.01 lot for every $60. |
+| **Grid** | `MaxGridLevels` | `8` | Maximum levels to open in one direction. |
+| | `LotMultiplier` | `1.6` | Geometric growth for recovery trades. |
+| **Signal** | `UseDynamicRsi` | `True` | Changes RSI limits based on ADX. |
+| **Risk** | `BasketSL_USD` | `$5.00` | Hard dollar stop-loss per basket. |
+| | `MaxDrawdown%` | `95.0%` | Emergency account protection. |
 
 ---
 
-## 🚀 Recommended Configuration
+## 📥 Installation
 
-* **Symbol:** `XAUUSD` (Gold)
-* **Timeframe:** `M5`
-* **Account Type:** Hedging (highly recommended), tight spread (Raw/ECN), 1:500 leverage or higher.
-* **Capital Requirements:** Designed for accounts between $50 and $100.
+1.  Download the `Gold_Sniper_Scalper.mq5` file.
+2.  Open your **MetaTrader 5** terminal.
+3.  Go to `File > Open Data Folder`.
+4.  Navigate to `MQL5 > Experts`.
+5.  Paste the file here.
+6.  Restart MT5, drag the bot onto an **XAUUSD M5** chart.
+7.  **Enable Algo Trading** in the top toolbar.
 
 ---
 
-## ⚠️ Disclaimer
+## ⚠️ Risk Disclaimer
 
-This trading algorithm operates with **extremely high leverage and aggression**. While the "Plastic Glove" and macro EMA filters are designed to filter out bad entries, trading Gold with small deposits carries an inherent risk of total capital loss. 
+Trading Forex and Gold carries a high level of risk. The Martingale strategy can result in the total loss of your deposit if not managed with strict risk settings. **Never trade with money you cannot afford to lose.**
 
-* **Use on a Demo Account first.**
-* Never trade with capital you cannot afford to lose.
-* Past performance does not guarantee future results.
+---
+
+## 👤 Author
+**Abdyleziz Sopyyev**
+Full-Stack & MQL5 Developer based in Ashgabat, Turkmenistan.
+
+[![Telegram](https://img.shields.io/badge/Telegram-2CA5E0?style=flat-square&logo=telegram&logoColor=white)](https://t.me/S_EZIZ) [![Upwork](https://img.shields.io/badge/Upwork-6FDA44?style=flat-square&logo=upwork&logoColor=white)](https://www.upwork.com/freelancers/~01f661b192d926ede0)
+
+***
